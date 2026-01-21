@@ -217,8 +217,9 @@
             });
         }
 
-        // Initialize nebula
+        // Initialize and draw nebula once
         initNebula();
+        drawNebula();
 
         // Drawer toggle functionality
         const drawer = document.getElementById('drawer');
@@ -427,8 +428,9 @@
 
         // Animation loop
         function animate(timestamp) {
-            // Draw nebula background each frame
-            drawNebula();
+            // Light fade effect for trails (don't completely clear)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Update and draw stars
             stars.forEach(star => {
