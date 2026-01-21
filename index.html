@@ -430,10 +430,6 @@
             // Draw nebula background each frame
             drawNebula();
 
-            // Semi-transparent black for trail fade effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             // Update and draw stars
             stars.forEach(star => {
                 star.update();
