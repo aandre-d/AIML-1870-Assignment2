@@ -170,9 +170,41 @@
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            drawNebula(); // Redraw nebula on resize
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+
+        // Draw nebula background
+        function drawNebula() {
+            // Create gradient nebula clouds
+            const nebulaCount = 5;
+            for (let i = 0; i < nebulaCount; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = 150 + Math.random() * 200;
+
+                // Random nebula colors (purples, blues, magentas)
+                const colors = [
+                    'rgba(138, 43, 226, 0.15)',  // Purple
+                    'rgba(75, 0, 130, 0.15)',    // Indigo
+                    'rgba(72, 61, 139, 0.15)',   // Dark slate blue
+                    'rgba(147, 112, 219, 0.15)', // Medium purple
+                    'rgba(123, 104, 238, 0.15)'  // Medium slate blue
+                ];
+
+                const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                gradient.addColorStop(0, color);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // Draw initial nebula
+        drawNebula();
 
         // Drawer toggle functionality
         const drawer = document.getElementById('drawer');
@@ -382,7 +414,7 @@
         // Animation loop
         function animate(timestamp) {
             // Semi-transparent black for trail fade effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Update and draw stars
