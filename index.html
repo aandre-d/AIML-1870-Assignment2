@@ -167,14 +167,6 @@
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initNebula(); // Reinitialize nebula on resize
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
         // Nebula cloud positions (fixed, so they don't flicker)
         const nebulaClouds = [];
         function initNebula() {
@@ -217,9 +209,17 @@
             });
         }
 
-        // Initialize and draw nebula once
-        initNebula();
-        drawNebula();
+        // Resize canvas function
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initNebula();
+            drawNebula();
+        }
+
+        // Initialize canvas and nebula
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
         // Drawer toggle functionality
         const drawer = document.getElementById('drawer');
