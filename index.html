@@ -170,10 +170,34 @@
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            drawNebula(); // Redraw nebula on resize
+            initNebula(); // Reinitialize nebula on resize
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+
+        // Nebula cloud positions (fixed, so they don't flicker)
+        const nebulaClouds = [];
+        function initNebula() {
+            nebulaClouds.length = 0; // Clear existing
+            const nebulaCount = 8;
+            const colors = [
+                'rgba(138, 43, 226, 0.3)',  // Purple
+                'rgba(75, 0, 130, 0.3)',    // Indigo
+                'rgba(72, 61, 139, 0.25)',   // Dark slate blue
+                'rgba(147, 112, 219, 0.3)', // Medium purple
+                'rgba(123, 104, 238, 0.25)', // Medium slate blue
+                'rgba(199, 21, 133, 0.25)'  // Medium violet red
+            ];
+
+            for (let i = 0; i < nebulaCount; i++) {
+                nebulaClouds.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: 250 + Math.random() * 300,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+        }
 
         // Draw nebula background
         function drawNebula() {
@@ -181,36 +205,20 @@
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Create gradient nebula clouds
-            const nebulaCount = 8;
-            for (let i = 0; i < nebulaCount; i++) {
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const radius = 250 + Math.random() * 300;
-
-                // Random nebula colors (purples, blues, magentas) - increased opacity
-                const colors = [
-                    'rgba(138, 43, 226, 0.3)',  // Purple
-                    'rgba(75, 0, 130, 0.3)',    // Indigo
-                    'rgba(72, 61, 139, 0.25)',   // Dark slate blue
-                    'rgba(147, 112, 219, 0.3)', // Medium purple
-                    'rgba(123, 104, 238, 0.25)', // Medium slate blue
-                    'rgba(199, 21, 133, 0.25)'  // Medium violet red
-                ];
-
-                const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                gradient.addColorStop(0, color);
+            // Draw nebula clouds
+            nebulaClouds.forEach(cloud => {
+                const gradient = ctx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
+                gradient.addColorStop(0, cloud.color);
                 gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.1)');
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
+            });
         }
 
-        // Draw initial nebula
-        drawNebula();
+        // Initialize nebula
+        initNebula();
 
         // Drawer toggle functionality
         const drawer = document.getElementById('drawer');
@@ -419,6 +427,9 @@
 
         // Animation loop
         function animate(timestamp) {
+            // Draw nebula background each frame
+            drawNebula();
+
             // Semi-transparent black for trail fade effect
             ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
