@@ -177,25 +177,31 @@
 
         // Draw nebula background
         function drawNebula() {
+            // Fill with black first
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             // Create gradient nebula clouds
-            const nebulaCount = 5;
+            const nebulaCount = 8;
             for (let i = 0; i < nebulaCount; i++) {
                 const x = Math.random() * canvas.width;
                 const y = Math.random() * canvas.height;
-                const radius = 150 + Math.random() * 200;
+                const radius = 250 + Math.random() * 300;
 
-                // Random nebula colors (purples, blues, magentas)
+                // Random nebula colors (purples, blues, magentas) - increased opacity
                 const colors = [
-                    'rgba(138, 43, 226, 0.15)',  // Purple
-                    'rgba(75, 0, 130, 0.15)',    // Indigo
-                    'rgba(72, 61, 139, 0.15)',   // Dark slate blue
-                    'rgba(147, 112, 219, 0.15)', // Medium purple
-                    'rgba(123, 104, 238, 0.15)'  // Medium slate blue
+                    'rgba(138, 43, 226, 0.3)',  // Purple
+                    'rgba(75, 0, 130, 0.3)',    // Indigo
+                    'rgba(72, 61, 139, 0.25)',   // Dark slate blue
+                    'rgba(147, 112, 219, 0.3)', // Medium purple
+                    'rgba(123, 104, 238, 0.25)', // Medium slate blue
+                    'rgba(199, 21, 133, 0.25)'  // Medium violet red
                 ];
 
                 const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 gradient.addColorStop(0, color);
+                gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.1)');
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
                 ctx.fillStyle = gradient;
