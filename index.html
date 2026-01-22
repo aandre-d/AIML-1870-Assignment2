@@ -171,14 +171,15 @@
         const nebulaClouds = [];
         function initNebula() {
             nebulaClouds.length = 0; // Clear existing
-            const nebulaCount = 10;
+            const nebulaCount = 12;
             const colors = [
-                'rgba(138, 43, 226, 0.6)',  // Purple
-                'rgba(75, 0, 130, 0.6)',    // Indigo
-                'rgba(72, 61, 139, 0.5)',   // Dark slate blue
-                'rgba(147, 112, 219, 0.6)', // Medium purple
-                'rgba(123, 104, 238, 0.5)', // Medium slate blue
-                'rgba(199, 21, 133, 0.5)'  // Medium violet red
+                'rgba(138, 43, 226, 0.9)',  // Purple - much brighter
+                'rgba(75, 0, 130, 0.9)',    // Indigo - much brighter
+                'rgba(72, 61, 139, 0.8)',   // Dark slate blue
+                'rgba(147, 112, 219, 0.9)', // Medium purple - much brighter
+                'rgba(123, 104, 238, 0.8)', // Medium slate blue
+                'rgba(199, 21, 133, 0.8)',  // Medium violet red
+                'rgba(186, 85, 211, 0.9)'   // Medium orchid - new color
             ];
 
             for (let i = 0; i < nebulaCount; i++) {
@@ -201,7 +202,7 @@
             nebulaClouds.forEach(cloud => {
                 const gradient = ctx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
                 gradient.addColorStop(0, cloud.color);
-                gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.1)');
+                gradient.addColorStop(0.4, 'rgba(138, 43, 226, 0.3)'); // More visible mid-tone
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
                 ctx.fillStyle = gradient;
