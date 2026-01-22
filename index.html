@@ -433,8 +433,8 @@
 
         // Animation loop
         function animate(timestamp) {
-            // Very light fade effect for trails (don't completely clear)
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+            // Very light fade effect for trails using dark purple instead of black
+            ctx.fillStyle = 'rgba(13, 0, 26, 0.03)'; // Dark purple fade
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Update and draw stars
